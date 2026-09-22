@@ -11,3 +11,6 @@ FastAPI(Python), Supabase/PostgresSQL (Database) \
  - npm run build: build the production environment for this project 
  **ALWAYS RUN NPM RUN BUILD AND NPM START BEFORE COMMITTING.**
  - npm start: Start the production environment built from the last npm run build
+###Developers:
+ - Julio Miyazaqui
+ - 
