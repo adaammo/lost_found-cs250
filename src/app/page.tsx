@@ -1,4 +1,7 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+
 export type Item = {
   id: string;
   item_name: string;
@@ -11,12 +14,11 @@ export type Item = {
   created_at: string;
 };
 
-// Temporary data for the first version of the page.
-// This will be replaced with data from the backend later.
+// Fake data for now
 const fakeItems: Item[] = [
   {
     id: "1",
-    item_name: "Black backpack",
+    item_name: "Black Backpack",
     item_description: "Black Jansport backpack with a blue keychain.",
     item_type: "lost",
     image_url: null,
@@ -27,7 +29,7 @@ const fakeItems: Item[] = [
   },
   {
     id: "2",
-    item_name: "Student ID card",
+    item_name: "Student ID Card",
     item_description: "SDSU student ID found near the library.",
     item_type: "found",
     image_url: null,
@@ -38,7 +40,7 @@ const fakeItems: Item[] = [
   },
   {
     id: "3",
-    item_name: "Blue water bottle",
+    item_name: "Blue Water Bottle",
     item_description: "Blue metal water bottle left in a classroom.",
     item_type: "lost",
     image_url: null,
@@ -49,76 +51,79 @@ const fakeItems: Item[] = [
   },
 ];
 
-const filterPills = ["All items", "Lost", "Found"];
-
 export default function Home() {
-  return (
-    <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-900">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-8">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-indigo-600">
-            SDSU Lost & Found
-          </p>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Find what you are looking for
-          </h1>
-          <p className="mt-3 max-w-2xl text-slate-600">
-            Browse recent lost and found items around campus.
-          </p>
-        </div>
+  // This stores the item that was clicked.
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
-        {/* Temporary pill row. These will become interactive filters later. */}
-        <div className="mb-8 flex flex-wrap gap-3">
-          {filterPills.map((pill, index) => (
+  return (
+    <main className="min-h-screen bg-[#222222] p-6 text-white">
+      <div className="mx-auto max-w-4xl">
+        <h1 className="mb-2 text-3xl font-bold">
+          Lost and Found
+        </h1>
+
+        <p className="mb-8 text-gray-400">
+          Click an item to see more information.
+        </p>
+
+        {/* Item pills */}
+        <div className="flex flex-col gap-3">
+          {fakeItems.map((item) => (
             <div
-              key={pill}
-              className={`rounded-full px-5 py-2.5 text-sm font-semibold shadow-sm ${
-                index === 0
-                  ? "bg-indigo-600 text-white"
-                  : "bg-white text-slate-700 ring-1 ring-slate-200"
-              }`}
+              key={item.id}
+              onClick={() => setSelectedItem(item)}
+              className="w-fit cursor-pointer rounded-full bg-white px-5 py-3 text-gray-900 shadow hover:bg-gray-200"
             >
-              {pill}
+              <p className="font-bold">
+                {item.item_name}
+              </p>
+
+              <p className="text-sm text-gray-600">
+                {item.item_description}
+              </p>
             </div>
           ))}
         </div>
-
-        <section>
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xl font-bold">Recent items</h2>
-            <span className="text-sm text-slate-500">Temporary sample data</span>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {fakeItems.map((item) => (
-              <div
-                key={item.id}
-                className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200"
-              >
-                <div className="mb-4 flex items-center justify-between">
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ${
-                      item.item_type === "lost"
-                        ? "bg-rose-100 text-rose-700"
-                        : "bg-emerald-100 text-emerald-700"
-                    }`}
-                  >
-                    {item.item_type}
-                  </span>
-                  <span className="text-xs text-slate-400">#{item.id}</span>
-                </div>
-                <h3 className="text-lg font-bold">{item.item_name}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  {item.item_description}
-                </p>
-                <p className="mt-4 text-xs text-slate-400">
-                  Campus location: {item.latitude.toFixed(4)}, {item.longitude.toFixed(4)}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
       </div>
+
+      {/* Popup modal */}
+      {selectedItem !== null && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/60 p-6">
+          <div className="w-full max-w-md rounded-lg bg-white p-6 text-gray-900">
+            <h2 className="text-2xl font-bold">
+              {selectedItem.item_name}
+            </h2>
+
+            <p className="mt-2 text-gray-600">
+              Owner: FAKE_NAME
+            </p>
+
+            <p className="mt-4">
+              {selectedItem.item_description}
+            </p>
+
+            <p className="mt-3">
+              <strong>Type:</strong> {selectedItem.item_type}
+            </p>
+
+            <p className="mt-2">
+              <strong>Item ID:</strong> {selectedItem.id}
+            </p>
+
+            <p className="mt-2">
+              <strong>Resolved:</strong>{" "}
+              {selectedItem.resolved ? "Yes" : "No"}
+            </p>
+
+            <button
+              onClick={() => setSelectedItem(null)}
+              className="mt-6 rounded bg-gray-800 px-4 py-2 text-white hover:bg-gray-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
