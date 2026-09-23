@@ -1,18 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-export type Item = {
-  id: string;
-  item_name: string;
-  item_description: string;
-  item_type: "lost" | "found";
-  image_url: string | null;
-  longitude: number;
-  latitude: number;
-  resolved: boolean;
-  created_at: string;
-};
+import { Item } from "../lib/types";
 
 // Fake data for now
 const fakeItems: Item[] = [
@@ -67,7 +56,7 @@ export default function Home() {
         </p>
 
         {/* Item pills */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-row gap-3">
           {fakeItems.map((item) => (
             <div
               key={item.id}
