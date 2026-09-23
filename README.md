@@ -13,4 +13,4 @@ FastAPI(Python), Supabase/PostgresSQL (Database) \
  - npm start: Start the production environment built from the last npm run build
 ## Developers:
  - Julio Miyazaqui
- - 
+ - Joshua Groh
