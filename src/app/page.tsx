@@ -1,48 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Item } from "../lib/types";
 
-// Fake data for now
-const fakeItems: Item[] = [
-  {
-    id: "1",
-    item_name: "Black Backpack",
-    item_description: "Black Jansport backpack with a blue keychain.",
-    item_type: "lost",
-    image_url: null,
-    longitude: -117.0719,
-    latitude: 32.7757,
-    resolved: false,
-    created_at: "2026-09-22T09:30:00Z",
-  },
-  {
-    id: "2",
-    item_name: "Student ID Card",
-    item_description: "SDSU student ID found near the library.",
-    item_type: "found",
-    image_url: null,
-    longitude: -117.0742,
-    latitude: 32.7753,
-    resolved: false,
-    created_at: "2026-09-21T15:10:00Z",
-  },
-  {
-    id: "3",
-    item_name: "Blue Water Bottle",
-    item_description: "Blue metal water bottle left in a classroom.",
-    item_type: "lost",
-    image_url: null,
-    longitude: -117.0735,
-    latitude: 32.7761,
-    resolved: false,
-    created_at: "2026-09-20T12:45:00Z",
-  },
-];
 
 export default function Home() {
   // This stores the item that was clicked.
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const [Items, setItems] = useState<Item[]>([]);
+
+  useEffect(() => {
+    async function loadItems() {
+      const items = await fetchItems();
+      setItems(items);
+    }
+
+    loadItems();
+  }, []);
 
   return (
     <main className="min-h-screen bg-[#222222] p-6 text-white">
@@ -57,7 +31,7 @@ export default function Home() {
 
         {/* Item pills */}
         <div className="flex flex-row gap-3">
-          {fakeItems.map((item) => (
+          {Items.map((item) => (
             <div
               key={item.id}
               onClick={() => setSelectedItem(item)}
@@ -115,4 +89,19 @@ export default function Home() {
       )}
     </main>
   );
+}
+
+type ItemsResponse = {
+  items: Item[];
+};
+
+async function fetchItems() {
+  const response = await fetch("http://localhost:8000/api/items");
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch items");
+  }
+
+  const data: ItemsResponse = await response.json();
+  return data.items;
 }
