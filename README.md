@@ -14,3 +14,5 @@ FastAPI(Python), Supabase/PostgresSQL (Database) \
 ## Developers:
  - Julio Miyazaqui
  - Joshua Groh
+ - Hyejoo Lee
+ - Adam Mohamed
