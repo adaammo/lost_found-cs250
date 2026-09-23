@@ -1,0 +1,32 @@
+name: API Tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  api-tests:
+    name: Test /api/items endpoint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    env:
+      # Dummy values: the tests replace Supabase with a fake client,
+      # so no real keys are needed (dev.env is never committed).
+      SUPABASE_URL: https://example.supabase.co
+      SUPABASE_ANON_KEY: dummy-key-for-ci
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run tests
+        run: uv run pytest -v
