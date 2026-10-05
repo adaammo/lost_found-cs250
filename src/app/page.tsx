@@ -14,7 +14,7 @@ export type Item = {
   created_at: string;
 };
 
-// Fake data for now
+// Fake item data for now
 const fakeItems: Item[] = [
   {
     id: "1",
@@ -52,7 +52,7 @@ const fakeItems: Item[] = [
 ];
 
 export default function Home() {
-  // This stores the item that was clicked.
+  // Stores the item selected by the user
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
   return (
