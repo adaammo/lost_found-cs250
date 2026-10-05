@@ -105,3 +105,8 @@ async function fetchItems() {
   const data: ItemsResponse = await response.json();
   return data.items;
 }
+
+
+function createItemReport(item: Item) {
+  
+}
