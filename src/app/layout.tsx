@@ -26,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}
-        <Link href="/reports" className="fixed bottom-4 right-4 rounded-full bg-blue-600 px-6 py-3 text-white shadow hover:bg-blue-700">
+        <Link href="/reports" className="fixed bottom-4 right-4 rounded-full bg-white-600 px-6 py-3 text-black shadow hover:bg-white-700">
         Create Item Report
         </Link>
 
