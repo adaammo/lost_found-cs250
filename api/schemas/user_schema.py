@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+
 class UserModel(BaseModel):
     id: str
     aud: str
@@ -13,3 +14,4 @@ class UserModel(BaseModel):
     created_at: str
     updated_at: str
     is_anonymous: bool = False
+    
