@@ -9,3 +9,15 @@ export type Item = {
     resolved: boolean;
     created_at: string;
   };
+  export type ItemsResponse = {
+    items: Item[];
+  };
+
+  export interface FastAPIErrorResponse {
+    status_code: number,
+    detail: string
+  }
+  export type PinPosition = {
+    lat: number,
+    lng: number
+  }

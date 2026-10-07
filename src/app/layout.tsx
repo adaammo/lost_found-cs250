@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import link from "next/link";
-import Link from "next/link";
+import { supabase } from "../lib/supabase/supabaseClient";
+import Navbar from "../components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,17 +19,18 @@ export const metadata: Metadata = {
   description: "Locating lost items across the san diego state campus",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const loggedIn = (user ? true : false);
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`font-sans h-full w-full antialiased bg-(--bg-primary) text-(--text-primary)`}
     >
-      <body className="min-h-full flex flex-col">{children}
-        <Link href="/reports" className="fixed bottom-4 right-4 rounded-full bg-white-600 px-6 py-3 text-black shadow hover:bg-white-700">
-        Create Item Report
-        </Link>
-
+      <body className="w-screen min-h-screen flex max-w-screen flex-col md:px-20.5 px-3">
+        <Navbar loggedIn = {loggedIn}/>
+        {children}
       </body>
     </html>
 
