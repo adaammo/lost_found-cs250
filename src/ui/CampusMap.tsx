@@ -4,7 +4,7 @@
 import "leaflet/dist/leaflet.css";
 
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
-import { Item } from "../lib/types";
+import { Item, ItemsProfileReturn, UserDatabaseProfile } from "../lib/types";
 import MapPinControl from "./MapControlPin";
 import { customMarker } from "../lib/constants";
 
@@ -21,11 +21,13 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { AnimatePresence, easeInOut, motion } from "motion/react";
 import Image from "next/image";
 
+// This is the lat,lng from google of the center of sdsu
 const SDSU_CENTER: [number, number] = [32.7757, -117.0719];
 
 type CampusMapProps = {
   items: Item[];
-  isUser: boolean;
+  profiles: Record<string, ItemsProfileReturn>;
+  user: UserDatabaseProfile | null
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   selectedItem: Item | null;
@@ -34,15 +36,15 @@ type CampusMapProps = {
 
 export default function CampusMap({
   items,
-  isUser,
+  user,
   isModalOpen,
   setIsModalOpen,
+  profiles,
   selectedItem,
   setSelectedItem,
 }: CampusMapProps) {
-  const [filter, setFilter] =
-    useState<"all" | "lost" | "found">("all");
-
+  const [filter, setFilter] = useState<"all" | "lost" | "found">("all");
+  console.log(selectedItem);
   // Filter the items shown in Recent Items
   const filteredItems = items.filter((item) => {
     if (filter === "all") {
@@ -51,7 +53,6 @@ export default function CampusMap({
 
     return item.item_type === filter;
   });
-
   // Open selected item inside the SAME right-side panel
   const openItemDetails = (item: Item) => {
     setSelectedItem(item);
@@ -177,9 +178,9 @@ export default function CampusMap({
                       onClick={() =>
                         setFilter(
                           f.toLowerCase() as
-                            | "all"
-                            | "lost"
-                            | "found"
+                          | "all"
+                          | "lost"
+                          | "found"
                         )
                       }
                       className={`
@@ -187,10 +188,9 @@ export default function CampusMap({
                         px-3
                         py-1
                         cursor-pointer
-                        ${
-                          filter === f.toLowerCase()
-                            ? "bg-(--btn-primary)"
-                            : "bg-(--btn-secondary)"
+                        ${filter === f.toLowerCase()
+                          ? "bg-(--btn-primary)"
+                          : "bg-(--btn-secondary)"
                         }
                       `}
                     >
@@ -243,10 +243,9 @@ export default function CampusMap({
                             rounded-md
                             text-xs
                             font-bold
-                            ${
-                              item.resolved
-                                ? "bg-green-600"
-                                : "bg-(--btn-primary)"
+                            ${item.resolved
+                              ? "bg-green-600"
+                              : "bg-(--btn-primary)"
                             }
                           `}
                         >
@@ -374,47 +373,24 @@ export default function CampusMap({
 
                         <div>
                           <p className="font-bold">
-                            default_user
-                          </p>
-
-                          <p className="text-xs text-gray-400">
-                            SDSU User
+                            {profiles[selectedItem.owner_id].username}
                           </p>
                         </div>
                       </div>
 
                       {/* CONTACT INFORMATION */}
                       <div
-                        className="
-                          mt-4
-                          pt-3
-                          border-t
-                          border-(--border)
-                        "
-                      >
-                        <p
-                          className="
-                            text-xs
-                            font-bold
-                            uppercase
-                            tracking-wide
-                            text-gray-400
-                            mb-2
-                          "
-                        >
+                        className=" flex flex-col mt-4 pt-3 border-t border-(--border)">
+                        <p className="font-bold">
                           Contact Information
                         </p>
-
-                        <div className="flex items-center gap-2">
+                        <p className="flex gap-1 items-center font-semibold text-sm">
                           <Mail
                             size={16}
-                            className="text-gray-400"
+                            className="text-(--accent)"
                           />
-
-                          <p className="text-sm text-gray-300">
-                            Contact information coming soon
-                          </p>
-                        </div>
+                          {profiles[selectedItem.owner_id].email}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -454,10 +430,9 @@ export default function CampusMap({
                         py-1
                         text-xs
                         font-bold
-                        ${
-                          selectedItem.resolved
-                            ? "bg-green-600"
-                            : "bg-(--btn-primary)"
+                        ${selectedItem.resolved
+                          ? "bg-green-600"
+                          : "bg-(--btn-primary)"
                         }
                       `}
                     >
