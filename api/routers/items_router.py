@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends
+from schemas.items_schema import AllItemsReturn
 from dep.supabase import get_supabase_public
 from services.items_service import ItemsService
 router = APIRouter()
 
-@router.get("/items")
+@router.get("/items", response_model=AllItemsReturn)
 async def get_items(
     supabase = Depends(get_supabase_public)
 ):
