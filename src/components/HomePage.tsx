@@ -1,27 +1,41 @@
-"use client"
+"use client";
+
 import { useState } from "react";
-import { Item } from "../lib/types";
+import { Item, ItemsProfileReturn, UserDatabaseProfile } from "../lib/types";
 import dynamic from "next/dynamic";
+
 type Home = {
-  items: Item[]
-  isUser: boolean
-}
-// Dynamic IS NEEDED for react-leaflet to render correctly. Docs are embedded directly when you hover dynamics but it is needed for DOM stuff
+  items: Item[];
+  user: UserDatabaseProfile | null;
+  profiles: Record<string, ItemsProfileReturn>;
+};
+// YOU NEED DYNAMIC TO STOP SERVER SIDE RENDERING. Leaflet relies heavily on window stuff, so this helps reduce any bugs that may occur
 const CampusMap = dynamic(() => import("@/src/ui/CampusMap"), {
   ssr: false,
 });
 
-export default function Home({items, isUser} : Home) {
-  // This stores the item that was clicked.
+export default function Home({ items, user, profiles }: Home) {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isItemModalOpen, setIsItemModalOpen] = useState<boolean>(false);
-  // Destruct when passing to component
-  const campusMapPropsPayload = {items, isUser, isModalOpen, setIsModalOpen, isItemModalOpen, setIsItemModalOpen}
+  
+// Destruct when passing to component
+// For readability, this is just the payload needed to pass as props to CampusMap
+  const campusMapPropsPayload = {
+    items,
+    user,
+    isModalOpen,
+    setIsModalOpen,
+    isItemModalOpen,
+    setIsItemModalOpen,
+    selectedItem,
+    setSelectedItem,
+    profiles
+  };
+
   return (
-    // Specifically h-calc because of nav bar
-    <div className = "flex flex-col gap-2 h-[calc(100vh-75px)]">
-          <CampusMap {...campusMapPropsPayload}/>
+    <div className="flex flex-col gap-2 h-[calc(100vh-75px)]">
+      <CampusMap {...campusMapPropsPayload} />
     </div>
   );
 }

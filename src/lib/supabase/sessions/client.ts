@@ -1,6 +1,6 @@
 import { supabase } from "../supabaseClient";
 
-export async function LogIn(email: string, password: string) {
+export async function LogIn(email: string, password: string) : Promise<{ ok: false, error: string } | { ok: true }>{
     const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -14,10 +14,9 @@ export async function LogIn(email: string, password: string) {
     }
     return {
         ok: true,
-        user: data.user,
-    };
+    }
 }
-export async function SignUp(first_name: string, last_name: string | null, email: string, password: string): Promise<{ ok: false, error: string } | { ok: true }> {
+export async function SignUp(email: string, password: string): Promise<{ ok: false, error: string } | { ok: true }> {
     if (!email || !password) {
         return {
             ok: false,
@@ -40,12 +39,6 @@ export async function SignUp(first_name: string, last_name: string | null, email
     const { error } = await supabase.auth.signUp({
         email: email.trim(),
         password: password.trim(),
-        options: {
-            data: {
-                first_name: first_name.trim(),
-                last_name: last_name?.trim(),
-            },
-        }
     });
     if (error) {
         return { ok: false, error: error.message };

@@ -14,7 +14,7 @@ key: str = os.getenv("SUPABASE_ANON_KEY")
 _supabase_client = create_client(url, key)
 # public reads - no admin control nessseary
 _public_client = create_client(url, key) 
-async def get_user(auth: str | None = Header(default=None, alias="Authorization")):
+async def get_user(auth: str | None = Header(default=None, alias="Authorization")) -> UserModel:
     if auth is None or "undefined" in auth:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -36,6 +36,15 @@ async def get_user(auth: str | None = Header(default=None, alias="Authorization"
         )
     except Exception as e:
         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Invalid Token")
+
+# THIS IS THE USERS SUPABASE. WE USE A HEADER PASSED WITH THEIR JWT REMOVE BEARERE AND RETURN THEIR AUTHORIZED CLIENT
+# _public_client is an unauthenthicated variable, this helps with RLS issues
+def get_supabase(authorization: str | None = Header(default=None, alias="Authorization")):
+    if not authorization:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Missing token.")
+    token = authorization.replace("Bearer ", "")
+    _supabase_client.postgrest.auth(token)
+    return _supabase_client
 
 def get_supabase_public() -> Client:
     return _public_client

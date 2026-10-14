@@ -1,5 +1,6 @@
 import L from "leaflet";
 import { Item } from "./types";
+import { UserAuthService } from "./class-stub/UserAuthService";
 
 export const customMarker = (item?: Item | null) => L.icon({
         iconUrl: (item && (item.resolved ? "/green-pin.svg" : "/red-pin.svg")) ?? "/selected-pin.svg",
@@ -7,3 +8,4 @@ export const customMarker = (item?: Item | null) => L.icon({
         iconSize: [25, 41],
         iconAnchor: [12, 41]
       });
+
