@@ -13,7 +13,7 @@ export async function insertItemReport(item: Item, token: string): Promise<{ ok:
         error: "Missing API URL",
       };
     }
-    
+    // Prepare the item payload for the API request
     const payload = {
       item_name: item.item_name,
       item_description: item.item_description,
@@ -23,6 +23,7 @@ export async function insertItemReport(item: Item, token: string): Promise<{ ok:
       created_at: item.created_at,
     };
 
+    // Make the POST request to the FastAPI backend
     const response = await axios.post<Item>(`${API_URL}/items`, payload, {
       headers: {
         "Content-Type": "application/json",

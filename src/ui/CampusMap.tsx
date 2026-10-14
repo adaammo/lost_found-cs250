@@ -48,6 +48,8 @@ export default function CampusMap({
   setSelectedItem,
 }: CampusMapProps) {
   const [filter, setFilter] = useState<"all" | "lost" | "found">("all");
+
+  // This is the form data for creating a new item report
   const [itemFormData, setItemFormData] = useState<Item>({
     id: "",
     owner_id: "",
@@ -60,6 +62,7 @@ export default function CampusMap({
     resolved: false,
     created_at: new Date().toISOString(),
   });
+  
   const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null);
   console.log(selectedItem);
   // Filter the items shown in Recent Items
@@ -128,6 +131,8 @@ export default function CampusMap({
         />
       </MapContainer>
 
+      {/* ================= CREATE ITEM REPORT ================= */}
+
                   <AnimatePresence>
                 {isItemModalOpen ? (
                     <motion.div
@@ -139,12 +144,14 @@ export default function CampusMap({
                         transition={{ duration: 0.25, ease: easeInOut }}
                         className="absolute bottom-4 left-4 z-[1000] max-h-[calc(100%-2rem)] w-[400px] shadow-xl bg-(--bg-secondary) overflow-y-auto flex flex-col gap-4 p-4"
                     >
+                        {/* ================= FORM HEADER ================= */}
                         <div className="w-full">
                             <h2 className="font-black tracking-wide text-xl">
                                 Create Item Report
                             </h2>
                         </div>
 
+                        {/* ================= FORM INPUTS ================= */}
                         <div className="flex flex-col gap-1">   
                             <label htmlFor="item-name" className="font-semibold">
                                 Item name:
@@ -210,6 +217,7 @@ export default function CampusMap({
                             />
                         </div>        
 
+                        {/* CLOSE, SUBMIT BUTTON */}
                         <div className="flex w-full items-center justify-between mt-4">
                             <button    
                                 type = "button"
@@ -230,6 +238,9 @@ export default function CampusMap({
                         </div>
                     </motion.div>
                 ) : (
+
+                    /* ================= OPEN CREATE ITEM REPORT BUTTON ================= */
+
                     <motion.button
                         key="open-item-modal"
                         type="button"
