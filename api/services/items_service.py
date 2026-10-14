@@ -1,6 +1,7 @@
 from supabase import Client
 from schemas.user_schema import ItemsProfileReturn
-from schemas.items_schema import AllItemsReturn
+from datetime import datetime, timezone
+from schemas.items_schema import AllItemsReturn, ItemInsertBody, ItemsTable
 from fastapi import HTTPException, status
 class ItemsService:
     def __init__(self, supabase: Client):
@@ -39,4 +40,31 @@ class ItemsService:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Interal Database Error"
+            )
+
+    """
+    This function inserts a new item report into the items table.
+    owner_id comes from the logged-in user's token (not the request body),
+    so nobody can create an item under someone else's name.
+    """
+    def insert_item(self, body: ItemInsertBody, owner_id: str) -> ItemsTable:
+        try:
+            # build the row: what the user typed + what only the server should decide
+            payload = {
+                **body.model_dump(),
+                "owner_id": owner_id,
+                "resolved": False,
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            }
+            # supabase returns the inserted row (with the id the DB generated)
+            result = (self.supabase.table("items")
+                .insert(payload)
+                .execute()
+                )
+            return ItemsTable(**result.data[0])
+        except Exception as e:
+            print(e)
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Something went wrong trying to save your item."
             )
