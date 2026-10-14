@@ -17,12 +17,17 @@ const CampusMap = dynamic(() => import("@/src/ui/CampusMap"), {
 export default function Home({ items, user, profiles }: Home) {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isItemModalOpen, setIsItemModalOpen] = useState<boolean>(false);
+  
+// Destruct when passing to component
 // For readability, this is just the payload needed to pass as props to CampusMap
   const campusMapPropsPayload = {
     items,
     user,
     isModalOpen,
     setIsModalOpen,
+    isItemModalOpen,
+    setIsItemModalOpen,
     selectedItem,
     setSelectedItem,
     profiles

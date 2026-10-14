@@ -4,15 +4,20 @@ import { PinPosition } from "../lib/types";
 import { useState } from "react";
 import { customMarker } from "../lib/constants";
 
-export default function MapPinControl() {
+type MapPinControlProps = {
+    onPositionSelect: (position: PinPosition) => void;
+};
+
+export default function MapPinControl({ onPositionSelect }: MapPinControlProps) {
     const [position, setPosition] = useState<PinPosition | null>(null)
     useMapEvents({
         click: (e) => {
             const { lat, lng } = e.latlng;
-            setPosition({
-                lat,
-                lng
-            })
+            const newPosition: PinPosition = { lat, lng };
+            
+            setPosition(newPosition);
+
+            onPositionSelect(newPosition);
         },
     })
     if (!position) {
