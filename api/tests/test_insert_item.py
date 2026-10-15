@@ -1,4 +1,4 @@
-"""Automated tests for the POST /api/items/insert endpoint.
+"""Automated tests for the POST /api/items/create endpoint.
 
 Like test_items.py, these replace Supabase (and the logged-in user) with fakes,
 so they run in GitHub Actions without real keys.
@@ -74,7 +74,7 @@ def test_insert_item_returns_201_and_saved_item():
     fake = FakeSupabase()
     use_fakes(fake)
 
-    response = client.post("/api/items/insert", json=VALID_BODY)
+    response = client.post("/api/items/create", json=VALID_BODY)
 
     assert response.status_code == 201
     body = response.json()
@@ -88,7 +88,7 @@ def test_insert_item_uses_owner_from_token_not_body():
     use_fakes(fake)
 
     # even if someone sends an owner_id, the server must ignore it
-    response = client.post("/api/items/insert", json={**VALID_BODY, "owner_id": "someone-else"})
+    response = client.post("/api/items/create", json={**VALID_BODY, "owner_id": "someone-else"})
 
     assert response.status_code == 201
     assert fake.inserted[0]["owner_id"] == "user-123"
@@ -97,7 +97,7 @@ def test_insert_item_uses_owner_from_token_not_body():
 def test_insert_item_returns_401_without_token():
     use_fakes(FakeSupabase(), logged_in=False)
 
-    response = client.post("/api/items/insert", json=VALID_BODY)
+    response = client.post("/api/items/create", json=VALID_BODY)
 
     assert response.status_code == 401
 
@@ -105,7 +105,7 @@ def test_insert_item_returns_401_without_token():
 def test_insert_item_returns_422_for_bad_item_type():
     use_fakes(FakeSupabase())
 
-    response = client.post("/api/items/insert", json={**VALID_BODY, "item_type": "stolen"})
+    response = client.post("/api/items/create", json={**VALID_BODY, "item_type": "stolen"})
 
     assert response.status_code == 422
 
@@ -113,6 +113,6 @@ def test_insert_item_returns_422_for_bad_item_type():
 def test_insert_item_returns_500_when_database_fails():
     use_fakes(FakeSupabase(fail=True))
 
-    response = client.post("/api/items/insert", json=VALID_BODY)
+    response = client.post("/api/items/create", json=VALID_BODY)
 
     assert response.status_code == 500

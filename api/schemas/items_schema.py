@@ -17,7 +17,7 @@ class ItemsTable(BaseModel):
 
 class ItemInsertBody(BaseModel):
     """
-    The request body for POST /items/insert.
+    The request body for POST /items/create.
     Field names must match the payload in insertItemReport() (src/lib/fastapiClient.ts),
     otherwise FastAPI rejects the request with a 422 error.
     owner_id, resolved, and created_at are NOT taken from the client; the server fills them in.

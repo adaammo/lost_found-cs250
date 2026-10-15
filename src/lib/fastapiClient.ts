@@ -24,7 +24,7 @@ export async function insertItemReport(item: Item, token: string): Promise<{ ok:
     };
 
     // Make the POST request to the FastAPI backend
-    const response = await axios.post<Item>(`${API_URL}/items`, payload, {
+    const response = await axios.post<Item>(`${API_URL}/items/create`, payload, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
