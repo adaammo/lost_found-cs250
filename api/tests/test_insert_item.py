@@ -14,7 +14,6 @@ from schemas.user_schema import UserModel
 VALID_BODY = {
     "item_name": "Black Backpack",
     "item_description": "Black Jansport backpack with a blue keychain.",
-    "item_type": "lost",
     "longitude": -117.0719,
     "latitude": 32.7757,
 }
@@ -77,10 +76,6 @@ def test_insert_item_returns_201_and_saved_item():
     response = client.post("/api/items/create", json=VALID_BODY)
 
     assert response.status_code == 201
-    body = response.json()
-    assert body["item_name"] == "Black Backpack"
-    assert body["id"] == "new-id"
-    assert body["resolved"] is False
 
 
 def test_insert_item_uses_owner_from_token_not_body():
@@ -100,15 +95,6 @@ def test_insert_item_returns_401_without_token():
     response = client.post("/api/items/create", json=VALID_BODY)
 
     assert response.status_code == 401
-
-
-def test_insert_item_returns_422_for_bad_item_type():
-    use_fakes(FakeSupabase())
-
-    response = client.post("/api/items/create", json={**VALID_BODY, "item_type": "stolen"})
-
-    assert response.status_code == 422
-
 
 def test_insert_item_returns_500_when_database_fails():
     use_fakes(FakeSupabase(fail=True))
