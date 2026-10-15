@@ -17,7 +17,7 @@ Creates a new item report for the logged-in user.
 get_user checks the Authorization header (401 if missing/invalid),
 get_supabase gives a client that acts as that user (so RLS rules apply).
 """
-@router.post("/items/create", response_model=ItemsTable, status_code=201)
+@router.post("/items/create", status_code=201)
 async def insert_item(
     body: ItemInsertBody,
     user: UserModel = Depends(get_user),

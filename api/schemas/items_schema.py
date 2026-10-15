@@ -24,10 +24,8 @@ class ItemInsertBody(BaseModel):
     """
     item_name: str = Field(min_length=1)
     item_description: str
-    item_type: Literal["lost", "found"]
     longitude: float
     latitude: float
-    image_url: str | None = None
 
 class AllItemsReturn(BaseModel):
     items: list[ItemsTable]

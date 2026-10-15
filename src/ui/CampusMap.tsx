@@ -4,7 +4,7 @@
 import "leaflet/dist/leaflet.css";
 
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
-import { Item, ItemsProfileReturn, UserDatabaseProfile } from "../lib/types";
+import { Item, ItemCreate, ItemsProfileReturn, UserDatabaseProfile } from "../lib/types";
 import MapPinControl from "./MapControlPin";
 import { customMarker } from "../lib/constants";
 
@@ -17,9 +17,11 @@ import {
   X,
 } from "lucide-react";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useTransition } from "react";
 import { AnimatePresence, easeInOut, motion } from "motion/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { insertItemReport } from "../lib/fastapiClient";
 
 // This is the lat,lng from google of the center of sdsu
 const SDSU_CENTER: [number, number] = [32.7757, -117.0719];
@@ -48,23 +50,18 @@ export default function CampusMap({
   setSelectedItem,
 }: CampusMapProps) {
   const [filter, setFilter] = useState<"all" | "lost" | "found">("all");
-
+  const router = useRouter();
+  // useTransition is used to display loading when api stuff is happening
+  const [isPending, startTransition] = useTransition();
   // This is the form data for creating a new item report
-  const [itemFormData, setItemFormData] = useState<Item>({
-    id: "",
-    owner_id: "",
+  const [itemFormData, setItemFormData] = useState<ItemCreate>({
     item_name: "",
     item_description: "",
-    item_type: "lost",
-    image_url: null,
     longitude: SDSU_CENTER[1],
     latitude: SDSU_CENTER[0],
-    resolved: false,
-    created_at: new Date().toISOString(),
   });
-  
+
   const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null);
-  console.log(selectedItem);
   // Filter the items shown in Recent Items
   const filteredItems = items.filter((item) => {
     if (filter === "all") {
@@ -109,7 +106,8 @@ export default function CampusMap({
         {items.map((item) => (
           <Marker
             key={item.id}
-            position={[item.longitude, item.latitude]}
+            // LEAFLET IS lat,lng
+            position={[item.latitude, item.longitude]}
             icon={customMarker(item)}
             eventHandlers={{
               click: () => {
@@ -120,141 +118,141 @@ export default function CampusMap({
         ))}
 
         {/* Clicking on the map sets the position for the new item report */}
-        <MapPinControl 
-            onPositionSelect={(selectedPosition) => {
-                setItemFormData({
-                    ...itemFormData,
-                    latitude: selectedPosition.lat,
-                    longitude: selectedPosition.lng,
-                });
-            }}
+        <MapPinControl
+          onPositionSelect={(selectedPosition) => {
+            setItemFormData({
+              ...itemFormData,
+              latitude: selectedPosition.lat,
+              longitude: selectedPosition.lng,
+            });
+          }}
         />
       </MapContainer>
 
       {/* ================= CREATE ITEM REPORT ================= */}
+      {user && (
+        <AnimatePresence>
+          {isItemModalOpen ? (
+            <motion.div
+              key="item-modal"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: easeInOut }}
+              className="absolute bottom-4 left-4 z-[1000] max-h-[calc(100%-2rem)] w-[400px] shadow-xl bg-(--bg-secondary) overflow-y-auto flex flex-col gap-4 p-4"
+            >
+              {/* ================= FORM HEADER ================= */}
+              <div className="w-full">
+                <h2 className="font-black tracking-wide text-xl">
+                  Create Item Report
+                </h2>
+              </div>
 
-                  <AnimatePresence>
-                {isItemModalOpen ? (
-                    <motion.div
-                        key="item-modal"
-                        onClick={(e) => e.stopPropagation()}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.25, ease: easeInOut }}
-                        className="absolute bottom-4 left-4 z-[1000] max-h-[calc(100%-2rem)] w-[400px] shadow-xl bg-(--bg-secondary) overflow-y-auto flex flex-col gap-4 p-4"
-                    >
-                        {/* ================= FORM HEADER ================= */}
-                        <div className="w-full">
-                            <h2 className="font-black tracking-wide text-xl">
-                                Create Item Report
-                            </h2>
-                        </div>
+              {/* ================= FORM INPUTS ================= */}
+              <div className="flex flex-col gap-1">
+                <label htmlFor="item-name" className="font-semibold">
+                  Item name:
+                </label>
 
-                        {/* ================= FORM INPUTS ================= */}
-                        <div className="flex flex-col gap-1">   
-                            <label htmlFor="item-name" className="font-semibold">
-                                Item name:
-                            </label>
+                <input
+                  type="text"
+                  id="item-name"
+                  value={itemFormData.item_name}
+                  onChange={(e) => setItemFormData({ ...itemFormData, item_name: e.target.value })}
+                  className="bg-white text-black border border--(border) rounded-md p-2"
+                />
+              </div>
 
-                            <input
-                                type="text"
-                                id="item-name"
-                                value={itemFormData.item_name}
-                                onChange={(e) => setItemFormData({ ...itemFormData, item_name: e.target.value })}
-                                className="bg-white text-black border border--(border) rounded-md p-2"
-                            />    
-                        </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="item-description" className="font-semibold">
+                  Item description:
+                </label>
+                <textarea
+                  id="item-description"
+                  value={itemFormData.item_description}
+                  onChange={(e) => setItemFormData({ ...itemFormData, item_description: e.target.value })}
+                  className="bg-white text-black border border--(border) rounded-md p-2"
+                />
+              </div>
 
-                        <div className="flex flex-col gap-1">
-                            <label htmlFor="item-description" className="font-semibold">
-                                Item description:
-                            </label>
-                            <textarea
-                                id="item-description"
-                                value={itemFormData.item_description}
-                                onChange={(e) => setItemFormData({ ...itemFormData, item_description: e.target.value })}
-                                className="bg-white text-black border border--(border) rounded-md p-2"
-                            />
-                        </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="latitude" className="font-semibold">
+                  Latitude:
+                </label>
+                <input
+                  type="number"
+                  id="latitude"
+                  value={itemFormData.latitude.toFixed(5)}
+                  readOnly
+                  className="bg-white text-black border border--(border) rounded-md p-2"
+                />
+              </div>
 
-                        <div className="flex flex-col gap-1">
-                            <label htmlFor="latitude" className="font-semibold">
-                                Latitude:
-                            </label>
-                            <input
-                                type="number"
-                                id="latitude"
-                                value={itemFormData.latitude.toFixed(5)}
-                                readOnly
-                                className="bg-white text-black border border--(border) rounded-md p-2"
-                            />
-                        </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="longitude" className="font-semibold">
+                  Longitude:
+                </label>
+                <input
+                  type="number"
+                  id="longitude"
+                  value={itemFormData.longitude.toFixed(5)}
+                  readOnly
+                  className="bg-white text-black border border--(border) rounded-md p-2"
+                />
+              </div>
 
-                        <div className="flex flex-col gap-1">
-                            <label htmlFor="longitude" className="font-semibold">
-                                Longitude:
-                            </label>
-                            <input
-                                type="number"
-                                id="longitude"
-                                value={itemFormData.longitude.toFixed(5)}
-                                readOnly
-                                className="bg-white text-black border border--(border) rounded-md p-2"
-                            />
-                        </div>
+              {/* CLOSE, SUBMIT BUTTON */}
+              <div className="flex w-full items-center justify-between mt-4">
+                <button
+                  type="button"
+                  onClick={() => setIsItemModalOpen(!isItemModalOpen)}
+                  className="cursor-pointer rounded-md border border-(--border) bg-(--btn-secondary) px-4 py-2 text-(--text-primary) hover:bg-(--btn-secondary-hover)"
+                  aria-label="Close Item Report Modal"
+                >
+                  Close
+                </button>
 
-                        <div className="flex flex-col gap-1">
-                            <label htmlFor="created-At" className="font-semibold">
-                                Created At:
-                            </label>
-                            <input
-                                type="text"
-                                id="created-At"
-                                value={itemFormData ? new Date(itemFormData.created_at).toLocaleDateString() : ""}
-                                readOnly
-                                className="bg-white text-black border border--(border) rounded-md p-2"
-                            />
-                        </div>        
+                <button
+                  onClick={() => {
+                    startTransition(async () => {
+                      const data = await insertItemReport(itemFormData)
+                      if (data.ok) {
+                        setIsItemModalOpen(false);
+                        window.location.reload();
+                        return router.refresh()
+                      }
+                      // error else
+                    })
+                  }}
+                  type="submit"
+                  disabled={isPending}
+                  className="bg-(--btn-primary) text-white rounded-md p-2 w-fit self-center hover:bg-(--btn-primary-hover) transition-colors"
+                  aria-label="Submit Item Report"
+                >
+                  {isPending ? <span className = "loading loading-bars loading-md"/> : "Submit Report"}
+                </button>
+              </div>
+            </motion.div>
+          ) : (
 
-                        {/* CLOSE, SUBMIT BUTTON */}
-                        <div className="flex w-full items-center justify-between mt-4">
-                            <button    
-                                type = "button"
-                                onClick = {() => setIsItemModalOpen(!isItemModalOpen)}
-                                className = "cursor-pointer rounded-md border border-(--border) bg-(--btn-secondary) px-4 py-2 text-(--text-primary) hover:bg-(--btn-secondary-hover)"
-                                aria-label="Close Item Report Modal"
-                            >
-                                Close
-                            </button>   
+            /* ================= OPEN CREATE ITEM REPORT BUTTON ================= */
 
-                            <button 
-                                type="submit" 
-                                className="bg-(--btn-primary) text-white rounded-md p-2 w-fit self-center hover:bg-(--btn-primary-hover) transition-colors"
-                                aria-label="Submit Item Report"
-                            >    
-                                Submit Report
-                            </button>
-                        </div>
-                    </motion.div>
-                ) : (
-
-                    /* ================= OPEN CREATE ITEM REPORT BUTTON ================= */
-
-                    <motion.button
-                        key="open-item-modal"
-                        type="button"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.25, ease: easeInOut }}
-                        onClick={() => setIsItemModalOpen(true)}
-                        className="bg-(--btn-primary) absolute bottom-4 left-4 z-[1000] px-2 py-2 border border-(--border) rounded-md hover:bg-(--btn-primary-hover) transition-colors"
-                        >
-                        Create Item Report
-                    </motion.button>
-                )}
-            </AnimatePresence>
+            <motion.button
+              key="open-item-modal"
+              type="button"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: easeInOut }}
+              onClick={() => setIsItemModalOpen(true)}
+              className="bg-(--btn-primary) absolute bottom-4 left-4 z-[1000] px-2 py-2 border border-(--border) rounded-md hover:bg-(--btn-primary-hover) transition-colors"
+            >
+              Create Item Report
+            </motion.button>
+          )}
+        </AnimatePresence>
+      )}
 
       {/* ================= RIGHT SIDE PANEL ================= */}
 
@@ -727,5 +725,5 @@ export default function CampusMap({
     </div>
   );
 
-  
+
 }
