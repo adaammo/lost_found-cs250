@@ -5,6 +5,57 @@ import axios, { isAxiosError } from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
+export async function insertItemReport(item: Item, token: string): Promise<{ ok: false; error: string } | { ok: true; item: Item }> {
+  try {
+    if (!API_URL) {
+      return {
+        ok: false,
+        error: "Missing API URL",
+      };
+    }
+    // Prepare the item payload for the API request
+    const payload = {
+      item_name: item.item_name,
+      item_description: item.item_description,
+      item_type: item.item_type,
+      longitude: item.longitude,
+      latitude: item.latitude,
+      created_at: item.created_at,
+    };
+
+    // Make the POST request to the FastAPI backend
+    const response = await axios.post<Item>(`${API_URL}/items`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    return {
+      ok: true,
+      item: response.data,
+    };
+  } catch (error) {
+    if (isAxiosError(error)) {
+      const data = error.response?.data as FastAPIErrorResponse | undefined;
+      const msg =
+        data?.detail ??
+        error.message ??
+        "Failed to submit item, please try again later";
+
+      return {
+        ok: false,
+        error: msg,
+      };
+    }
+
+    return {
+      ok: false,
+      error: "Something happened internally, please try again",
+    };
+  }
+}
+
 export async function fetchItems(): Promise<
   { ok: false; error: string } | { ok: true; items: Item[], profiles: Record<string, ItemsProfileReturn>}
 > {

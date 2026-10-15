@@ -46,5 +46,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         {children}
       </body>
     </html>
+
   );
 }
