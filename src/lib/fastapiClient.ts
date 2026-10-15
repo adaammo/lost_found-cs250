@@ -1,12 +1,19 @@
 "use server";
 
-import { FastAPIErrorResponse, Item, ItemsProfileReturn, ItemsWithProfilesResponse, UserDatabaseProfile } from "./types";
+import { createClient } from "./supabase/supabaseServer";
+import { FastAPIErrorResponse, Item, ItemCreate, ItemsProfileReturn, ItemsWithProfilesResponse, UserDatabaseProfile } from "./types";
 import axios, { isAxiosError } from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
-export async function insertItemReport(item: Item, token: string): Promise<{ ok: false; error: string } | { ok: true; item: Item }> {
+export async function insertItemReport(item: ItemCreate): Promise<{ ok: false; error: string } | { ok: true; item: Item }> {
   try {
+    const supabaseServer = createClient();
+    const {data: {session}, error} = await (await supabaseServer).auth.getSession();
+    if(error || !session){
+      return {ok: false, error: "No session or broken database. Please try again."}
+    }
+    const token = session?.access_token ?? ""
     if (!API_URL) {
       return {
         ok: false,
@@ -17,12 +24,9 @@ export async function insertItemReport(item: Item, token: string): Promise<{ ok:
     const payload = {
       item_name: item.item_name,
       item_description: item.item_description,
-      item_type: item.item_type,
       longitude: item.longitude,
       latitude: item.latitude,
-      created_at: item.created_at,
     };
-
     // Make the POST request to the FastAPI backend
     const response = await axios.post<Item>(`${API_URL}/items/create`, payload, {
       headers: {
@@ -76,7 +80,6 @@ export async function fetchItems(): Promise<
     };
   } catch (err) {
     if (isAxiosError(err)) {
-      console.log(err.message)
       const data = err.response?.data as FastAPIErrorResponse | undefined;
 
       const msg =

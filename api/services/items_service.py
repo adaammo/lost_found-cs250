@@ -47,11 +47,12 @@ class ItemsService:
     owner_id comes from the logged-in user's token (not the request body),
     so nobody can create an item under someone else's name.
     """
-    def insert_item(self, body: ItemInsertBody, owner_id: str) -> ItemsTable:
+    def insert_item(self, body: ItemInsertBody, owner_id: str):
         try:
             # build the row: what the user typed + what only the server should decide
             payload = {
                 **body.model_dump(),
+                "item_type": "lost",
                 "owner_id": owner_id,
                 "resolved": False,
                 "created_at": datetime.now(timezone.utc).isoformat(),
@@ -61,7 +62,7 @@ class ItemsService:
                 .insert(payload)
                 .execute()
                 )
-            return ItemsTable(**result.data[0])
+            return {"ok": True}
         except Exception as e:
             print(e)
             raise HTTPException(

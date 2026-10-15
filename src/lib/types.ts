@@ -10,6 +10,12 @@ export type Item = {
   resolved: boolean;
   created_at: string;
 };
+export type ItemCreate = {
+  item_name: string;
+  item_description: string;
+  longitude: number;
+  latitude: number;
+}
 
 export type ItemsProfileReturn = {
   id: string;
