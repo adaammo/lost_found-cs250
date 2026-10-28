@@ -8,10 +8,10 @@
 
 | Role | Name |
 |--------|--------|
-| Product Analyst | Trystan |
-| Architect | TBD |
-| Frontend Tracer | Javier |
-| Backend Tracer | TBD |
+| Product Analyst | Amber |
+| Architect | Javier |
+| Frontend Tracer | Ray |
+| Backend Tracer | Trystan |
 
 ---
 
@@ -70,6 +70,29 @@ Clarification on Front-end inputs and how they’re stored in the database?
 Where is the anchor placement and how do we edit? 
 
 ---
+
+# Part 5: Candidate Requirements
+
+| ID | Candidate Requirement | Type | Source | Status | Acceptance Criterion |
+|------|------|------|------|------|------|
+| CR-1 | The system shall create a lost item report when a user submits valid item information. | Functional | Trace Steps 1-4 | Confirmed | Valid item information is stored successfully. |
+| CR-2 | The system shall display submitted items on the campus map. | Functional | Trace Step 5 | Confirmed | Newly submitted item appears on the map. |
+| CR-3 | The system shall reject reports with an empty item name. | Functional | ItemCreate data model | Unconfirmed | Empty item name returns an error. |
+| CR-4 | The system shall reject coordinates outside valid map boundaries. | Functional | ItemCreate data model | Unconfirmed | Invalid coordinates return an error. |
+| CR-5 | The system shall prevent duplicate item reports from being submitted. | Non-Functional | No duplicate validation observed | Suspected Bug | Duplicate submissions result in only one stored record. |
+
+---
+
+# Part 6: Unit Test Cases
+
+| ID | Requirement | Kind | Unit Under Test | Input | Expected Output | Predicted Result Today |
+|------|------|------|------|------|------|------|
+| TC-1 | CR-1 | Positive | fastapiClient.ts → insertItemReport() | Valid pointer form item record | Successful report creation | Pass |
+| TC-2 | CR-3 | Negative | fastapiClient.ts → insertItemReport() | Empty item name | Error response | Unknown |
+| TC-3 | CR-4 | Boundary | fastapiClient.ts → insertItemReport() | longitude=99999, latitude=99999 | Error response | Likely Fail |
+
+(Some of the behaviors of the test cases are anticipated from from demo experience, by project parent group)
+
 
 
 
