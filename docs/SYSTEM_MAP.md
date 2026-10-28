@@ -75,7 +75,7 @@ Where is the anchor placement and how do we edit?
 
 | ID | Candidate Requirement | Type | Source | Status | Acceptance Criterion |
 |------|------|------|------|------|------|
-| CR-1 | The system shall create a lost item report when a user submits valid item information. | Functional | Trace Steps 1-4 | Confirmed | Valid item information is stored successfully. |
+| CR- 1 | The system shall create a lost item report when a user submits valid item information. | Functional | Trace Steps 1-4 | Confirmed | Valid item information is stored successfully. |
 | CR-2 | The system shall display submitted items on the campus map. | Functional | Trace Step 5 | Confirmed | Newly submitted item appears on the map. |
 | CR-3 | The system shall reject reports with an empty item name. | Functional | ItemCreate data model | Unconfirmed | Empty item name returns an error. |
 | CR-4 | The system shall reject coordinates outside valid map boundaries. | Functional | ItemCreate data model | Unconfirmed | Invalid coordinates return an error. |
