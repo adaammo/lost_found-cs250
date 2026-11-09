@@ -1,13 +1,14 @@
-# Testable Requirements: [Project Name]
+# Testable Requirements: Lost & Found
 
-**Team number:** [XX]
-**Inherited from:** Team [XX]
+**Team number:** [04]
+**Inherited from:** Team [03]
 
 ## Who Owns What
 
 | Area of the system | Owner | ID prefix |
 |---|---|---|
 | [example: Accounts and login] | [name] | [initials, like MG] |
+| Front End | Javier | JR |
 | | | |
 | | | |
 | | | |
@@ -23,27 +24,28 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: Front-End (Javier Rivera)
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| G-XX-01 | | |
+| G-JR-01 | Student | View lost-item reports on the campus map so they can locate reported items. |
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| REQ-XX-01 | | | |
-| REQ-XX-02 | | | |
-| REQ-XX-03 | | | |
+| REQ-JR-01 | The system shall display submitted Lost-Item pointers on the campus map. | Confirmed | CR-2 |
+| REQ-JR-02 | The system shall display an error message when a user attempts to submit a report with an empty item name. | Suspected bug | CR-3 |
+| REQ-JR-03 | The system shall prevent report submission when required fields are empty. | Confirmed | CR-3 |
+| REQ-JR-04 | The system shall indicate the location of each submitted item using a visible map marker. | Confirmed | CR-2 |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| NFR-XX-01 | | | |
+| NFR-JR-01 | The campus map shall display a newly submitted lost-item marker within 2 seconds of successful submission. | Confirmed | CR-2 |
 
 ### Example of a Good Rewrite
 
