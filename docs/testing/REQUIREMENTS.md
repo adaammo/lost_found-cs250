@@ -45,14 +45,14 @@ RULES
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| NFR-JR-01 | The campus map shall display a newly submitted lost-item marker within 2 seconds of successful submission. | Confirmed | CR-2 |
+| NFR-JR-01 | The campus map shall display a newly submitted lost-item marker within 5 seconds of successful submission. | Confirmed | CR-2 |
 
 ### Example of a Good Rewrite
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
 | REQ-MG-01 | The system shall reject a profile bio longer than 280 characters with the error "Bio must be 280 characters or fewer." | Suspected bug | CR-3 (Unconfirmed): The system shall limit the bio to 280 characters. |
-| NFR-MG-01 | The profile page loads in under 5 seconds with 100 profiles in the database. | Confirmed | New |
+| NFR-MG-01 | The profile page loads in under 2 seconds with 100 profiles in the database. | Confirmed | New |
 
 ---
 
