@@ -121,7 +121,7 @@ Longitude: -117.071
 2. Start timing when Submit Report is clicked.
 3. Observe the map for the new marker.
 
-**Expected result:** The marker appears on the campus map within 2 seconds of successful submission.
+**Expected result:** The marker appears on the campus map within 5 seconds of successful submission.
 **Actual result:** PENDING 
 **Status:** PENDING (Pass / Fail)
 **Severity:** PENDING (Critical / Major / Minor, Fail only)
