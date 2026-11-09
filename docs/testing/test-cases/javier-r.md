@@ -38,11 +38,11 @@ Longitude: -117.07188
 3. View the campus map.
 
 **Expected result:** A visible map marker appears at the submitted location representing the lost item.
-**Actual result:** PENDING 
-**Status:** PENDING (Pass / Fail)
-**Severity:** PENDING (Critical / Major / Minor, Fail only)
-**V or V:** PENDING (Verification / Validation, Fail only)
-**GitHub Issue:** PENDING (#number, Fail only)
+**Actual result:** A marker representing the submitted lost-item report appeared on the map at the selected location. 
+**Status:** Pass (Pass / Fail)
+**Severity:** N/A (Critical / Major / Minor, Fail only)
+**V or V:** N/A (Verification / Validation, Fail only)
+**GitHub Issue:** N/A (#number, Fail only)
 
 ---
 
@@ -66,11 +66,11 @@ Longitude: 23.90625
 3. Click Submit Report.
 
 **Expected result:** The system rejects the coordinates and prevents report submission.
-**Actual result:** PENDING 
-**Status:** PENDING (Pass / Fail)
-**Severity:** PENDING (Critical / Major / Minor, Fail only)
-**V or V:** PENDING (Verification / Validation, Fail only)
-**GitHub Issue:** PENDING (#number, Fail only)
+**Actual result:** The report was accepted and a marker was created despite coordinates being outside valid map boundaries.
+**Status:** Fail (Pass / Fail)
+**Severity:** Major (Critical / Major / Minor, Fail only)
+**V or V:** Verification (Verification / Validation, Fail only)
+**GitHub Issue:** #87 (#number, Fail only)
 
 ---
 
@@ -94,11 +94,11 @@ Longitude: -117.07188
 3. Click Submit Report.
 
 **Expected result:** The system prevents the submission and displays validation feedback for what fields are required to be completed.
-**Actual result:** PENDING 
-**Status:** PENDING (Pass / Fail)
-**Severity:** PENDING (Critical / Major / Minor, Fail only)
-**V or V:** PENDING (Verification / Validation, Fail only)
-**GitHub Issue:** PENDING (#number, Fail only)
+**Actual result:** The system prevented the report submission when required fields were left blank, but there was no field-specific validation feedback being displayed. 
+**Status:** Pass (Pass / Fail)
+**Severity:** N/A (Critical / Major / Minor, Fail only)
+**V or V:** N/A (Verification / Validation, Fail only)
+**GitHub Issue:** N/A (#number, Fail only)
 
 ---
 
@@ -122,10 +122,10 @@ Longitude: -117.071
 3. Observe the map for the new marker.
 
 **Expected result:** The marker appears on the campus map within 5 seconds of successful submission.
-**Actual result:** PENDING 
-**Status:** PENDING (Pass / Fail)
-**Severity:** PENDING (Critical / Major / Minor, Fail only)
-**V or V:** PENDING (Verification / Validation, Fail only)
-**GitHub Issue:** PENDING (#number, Fail only)
+**Actual result:** The marker appeared between approximately 1.48 and 3.38 seconds during repeated tests. 
+**Status:** Pass (Pass / Fail)
+**Severity:** N/A (Critical / Major / Minor, Fail only)
+**V or V:** N/A (Verification / Validation, Fail only)
+**GitHub Issue:** N/A (#number, Fail only)
 
 ---
