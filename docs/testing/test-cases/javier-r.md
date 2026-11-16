@@ -98,7 +98,7 @@ Longitude: -117.07188
 **Status:** Pass (Pass / Fail)
 **Severity:** N/A (Critical / Major / Minor, Fail only)
 **V or V:** N/A (Verification / Validation, Fail only)
-**GitHub Issue:** N/A (#number, Fail only)
+**GitHub Issue:** #83 (#number, Fail only)
 
 ---
 
