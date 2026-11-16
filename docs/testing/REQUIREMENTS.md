@@ -69,7 +69,7 @@ RULES
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
 | REQ-AR-01 | The system shall create exactly one lost-item record when an authenticated user submits a valid item name, description, latitude, and longitude. The record shall include the authenticated user as its owner. | Confirmed | CR-1 |
-| REQ-AR-02 | The system shall prevent the same authenticated user from creating duplicate lost-item records with identical item information and coordinates during one submission attempt. | Suspected bug | CR-5 |
+| REQ-AR-02 | The system shall prevent an authenticated user from submitting a second lost-item report with the same item name and description within one minute. | Suspected bug | CR-5 |
 | REQ-AR-03 | The system shall ignore any client-supplied owner ID and assign ownership using the authenticated user's account. | Confirmed | New |
 | REQ-AR-04 | The system shall return an error and create no record when an unauthenticated user attempts to submit an item report. | Confirmed | New |
 
