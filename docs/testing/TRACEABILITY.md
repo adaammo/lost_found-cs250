@@ -1,7 +1,7 @@
 # Traceability Matrix
 
-**Team number:** [XX]
-**Filled in by (captain):** [name]
+**Team number:** [04]
+**Filled in by (captain):** [Trystan McCutcheon]
 
 Fill this in **after** everyone's work is merged. One row per requirement.
 
@@ -14,21 +14,18 @@ Fill this in **after** everyone's work is merged. One row per requirement.
 | REQ-JR-02 | CR-4 | Javier | JR-02 | 0 Pass, 1 Fail | #87 |
 | REQ-JR-03 | CR-3 | Javier | JR-03 | 1 Pass, 0 Fail | #83 |
 | REQ-JR-04 | CR-2 | Javier | JR-01 | 1 Pass, 0 Fail | None |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
+| REQ-AR-01 | CR-1 | Amber | AR-03 | 1 Pass, 0 Fail | None |
+| REQ-AR-02 | CR-5 | Amber | AR-02 bug | 0 Pass, 1 Fail | None |
+| REQ-AR-03 | New | Amber | AR-02 | 0 Pass, 1 Fail  | None |
+| REQ-AR-04 | New | Amber |AR-01 | 1 Pass, 0 Fail | None |
+| REQ-TM-03 | New | Trystan | TM-01 | 1 Pass, 0 Fail | None |
+| REQ-TM-01 | New | Trystan | TM-01 | 0 Pass, 1 Fail | #78 |
+| REQ-TM-04 | New | Trystan | TM-02 | 0 Pass, 1 Fail | #91 |
+| REQ-TM-02 | New | Trystan | TM-01 | 0 Pass, 1 Fail | #90 |
 
 ## Gaps
 
-List any requirement with no test, any test with no requirement, and any Part 5 requirement or Part 6 test that nobody brought over. Write "None" if there are none.
+None
 
 -
 
@@ -38,13 +35,13 @@ Put a Test ID next to each type. Team minimum: all 7.
 
 | Test type | Test ID |
 |---|---|
-| Unit | |
-| Integration | |
-| System (E2E) | |
-| Acceptance | |
-| Boundary Value | |
+| Unit | TM-02 | TM-04 | AR-01 |
+| Integration | JR-04 | AR-02 |
+| System (E2E) | TM-01 | JR-03 |
+| Acceptance | TM-03 | JR-01 | AR-04 |
+| Boundary Value | JR-02 |
 | Negative | |
-| Security | |
+| Security | AR-03 |
 
 ## Validation Findings
 
@@ -52,7 +49,7 @@ A Validation finding means the system does what the requirement says, but the re
 
 | Requirement ID | Goal it fails | Why | Issue # |
 |---|---|---|---|
-| | | | |
+| AR-04 | G-JR-01 | While it is still viewable there is no limit to where the campus map can go leading to it fitting the requirement while still not matching stakeholder goals  | N/A |
 
 **If you found none,** explain in 2 to 3 sentences why every requirement truly serves its Goal:
 
@@ -62,16 +59,16 @@ A Validation finding means the system does what the requirement says, but the re
 
 | | Count |
 |---|---|
-| Part 5 requirements carried over | |
-| New requirements added | |
-| Part 6 tests upgraded (out of 3) | |
-| Total requirements | |
-| Total test cases | |
-| Passed | |
-| Failed | |
-| Issues opened | |
-| Critical issues | |
+| Part 5 requirements carried over | 3 |
+| New requirements added | 9 |
+| Part 6 tests upgraded (out of 3) | 3 |
+| Total requirements | 12 |
+| Total test cases | 12 |
+| Passed | 6 |
+| Failed | 6 |
+| Issues opened | 7 |
+| Critical issues | 0 |
 
 **In one sentence, would you ship this system today? Why or why not?**
-
+No, this system has issues that will grow with the user base growing meaning it's not ready for shipment.
 >
