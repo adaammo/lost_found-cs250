@@ -10,10 +10,10 @@ Fill this in **after** everyone's work is merged. One row per requirement.
 | Requirement ID | From Part 5 | Owner | Test case IDs | Result | GitHub Issue # |
 |---|---|---|---|---|---|
 | REQ-MG-01 *(example)* | CR-3 | Maria | MG-01, MG-02 | 1 Pass, 1 Fail | #12 |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
+| REQ-JR-01 | CR-2 | Javier | JR-01 | 1 Pass, 0 Fail | None |
+| REQ-JR-02 | CR-4 | Javier | JR-02 | 0 Pass, 1 Fail | #87 |
+| REQ-JR-03 | CR-3 | Javier | JR-03 | 1 Pass, 0 Fail | #83 |
+| REQ-JR-04 | CR-2 | Javier | JR-01 | 1 Pass, 0 Fail | None |
 | | | | | | |
 | | | | | | |
 | | | | | | |
