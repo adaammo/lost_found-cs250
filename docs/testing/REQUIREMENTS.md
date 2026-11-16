@@ -9,7 +9,7 @@
 |---|---|---|
 | [example: Accounts and login] | [name] | [initials, like MG] |
 | Front End | Javier | JR |
-| | | |
+| Item Reporting / Submission | Amber Rama | AR |
 | | | |
 | | | |
 
@@ -56,27 +56,28 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: Item Reporting / Submission (Amber Rama)
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| | | |
+| G-AR-01 | SDSU student | Submit an accurate lost-item report so another student can locate and recover the item. |
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+| REQ-AR-01 | The system shall create exactly one lost-item record when an authenticated user submits a valid item name, description, latitude, and longitude. The record shall include the authenticated user as its owner. | Confirmed | CR-1 |
+| REQ-AR-02 | The system shall prevent the same authenticated user from creating duplicate lost-item records with identical item information and coordinates during one submission attempt. | Suspected bug | CR-5 |
+| REQ-AR-03 | The system shall ignore any client-supplied owner ID and assign ownership using the authenticated user's account. | Confirmed | New |
+| REQ-AR-04 | The system shall return an error and create no record when an unauthenticated user attempts to submit an item report. | Confirmed | New |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
+| NFR-AR-01 | The item-report endpoint shall reject unauthenticated requests with HTTP 401 before creating or modifying an item record. | Confirmed | New |
 
 ---
 
