@@ -10,7 +10,7 @@
 | [example: Accounts and login] | [name] | [initials, like MG] |
 | Front End | Javier | JR |
 | Item Reporting / Submission | Amber Rama | AR |
-| | | |
+| Back End / User Experience | Trystan McCutcheon | TM |
 | | | |
 
 <!--
@@ -81,27 +81,27 @@ RULES
 
 ---
 
-## Section: [Your Area] ([Your Name])
+## Section: [Back End / User Experience] ([Trystan McCutcheon])
 
 ### Stakeholder Goals
 
 | ID | Stakeholder | Goal |
 |---|---|---|
-| | | |
+| REQ-TM-03 | Owner of Item | Lost-item owner can be contacted if item found via email contact information |
 
 ### Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
-| | | | |
+| REQ-TM-01 | The system shall group pins if they share the same longitude and latitude. | Confirmed | New |
+| REQ-TM-04 | The system shall resolve and remove pins a hour after they are resolved by the owner or a month after inactive | Confirmed | New |
 | | | | |
 
 ### Non-Functional Requirements
 
 | ID | Requirement | Status | From Part 5 |
 |---|---|---|---|
-| | | | |
+| REQ-TM-02 | The system shall reject any item report with a title over 20 characters and description over 100 characters. | Confirmed | New |
 
 ---
 
