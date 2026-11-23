@@ -168,6 +168,7 @@ export default function CampusMap({
                 <input
                   type="text"
                   id="item-name"
+                  maxLength={50}
                   value={itemFormData.item_name}
                   onChange={(e) => setItemFormData({ ...itemFormData, item_name: e.target.value })}
                   className="bg-white text-black border border--(border) rounded-md p-2"
@@ -180,6 +181,7 @@ export default function CampusMap({
                 </label>
                 <textarea
                   id="item-description"
+                  maxLength={500}
                   value={itemFormData.item_description}
                   onChange={(e) => setItemFormData({ ...itemFormData, item_description: e.target.value })}
                   className="bg-white text-black border border--(border) rounded-md p-2"
@@ -252,6 +254,9 @@ export default function CampusMap({
                         setIsItemModalOpen(false);
                         window.location.reload();
                         return router.refresh()
+                      }
+                      else {
+                        alert(data.error);
                       }
                     })
                   }}
