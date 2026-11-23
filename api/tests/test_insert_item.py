@@ -102,3 +102,64 @@ def test_insert_item_returns_500_when_database_fails():
     response = client.post("/api/items/create", json=VALID_BODY)
 
     assert response.status_code == 500
+
+def test_insert_item_rejects_whitespace_item_name():
+    fake = FakeSupabase()
+    use_fakes(fake)
+
+    response = client.post(
+        "/api/items/create",
+        json={**VALID_BODY, "item_name": "   "}
+    )
+
+    assert response.status_code == 422
+
+def test_insert_item_rejects_empty_description():
+    fake = FakeSupabase()
+    use_fakes(fake)
+
+    response = client.post(
+        "/api/items/create",
+        json={**VALID_BODY, "item_description": ""}
+    )
+
+    assert response.status_code == 422
+
+def test_insert_item_accepts_one_character_name():
+    fake = FakeSupabase()
+    use_fakes(fake)
+
+    response = client.post(
+        "/api/items/create",
+        json={**VALID_BODY, "item_name": "A"}
+    )
+
+    assert response.status_code == 201
+
+def test_insert_item_rejects_missing_item_name():
+    fake = FakeSupabase()
+    use_fakes(fake)
+
+    body = VALID_BODY.copy()
+    del body["item_name"]
+
+    response = client.post(
+        "/api/items/create",
+        json=body
+    )
+
+    assert response.status_code == 422    
+
+def test_insert_item_rejects_missing_latitude():
+    fake = FakeSupabase()
+    use_fakes(fake)
+
+    body = VALID_BODY.copy()
+    del body["latitude"]
+
+    response = client.post(
+        "/api/items/create",
+        json=body
+    )
+
+    assert response.status_code == 422

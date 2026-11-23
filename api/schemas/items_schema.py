@@ -1,5 +1,5 @@
 from typing import Literal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from schemas.user_schema import ItemsProfileReturn
 
@@ -23,9 +23,16 @@ class ItemInsertBody(BaseModel):
     owner_id, resolved, and created_at are NOT taken from the client; the server fills them in.
     """
     item_name: str = Field(min_length=1)
-    item_description: str
+    item_description: str = Field(min_length=1)
     longitude: float
     latitude: float
+
+    @field_validator("item_name")
+    @classmethod
+    def item_name_cannot_be_blank(cls, value: str):
+        if not value.strip():
+            raise ValueError("Item name cannot be blank")
+        return value
 
 class AllItemsReturn(BaseModel):
     items: list[ItemsTable]
