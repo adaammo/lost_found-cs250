@@ -10,11 +10,11 @@
 
 ### Before Screenshot
 
-![Issue 90 Before](screenshots/trystan_mccutcheon_issue102_before.png)
+![Issue 90 Before](screenshots/trystan_mccutcheon_issue90_before.png)
 
 ### After Screenshot
 
-![Issue 90 After](screenshots/trystan_mccutcheon_issue102_after.png)
+![Issue 90 After](screenshots/trystan_mccutcheon_issue90_after.png)
 
 ### Classification
 
@@ -37,7 +37,7 @@ Claude was used to clarify unknown code and instructions. No direct code or writ
 [[Click GitHub Issue #102 Link Here](https://github.com/adaammo/lost_found-cs250/issues/102)]
 
 ### Pull Request Link
-[[Click Pull Request Link Here](https://github.com/adaammo/lost_found-cs250/pull/)] !!!
+[[Click Pull Request Link Here](https://github.com/adaammo/lost_found-cs250/pull/106)]
 
 ### Before Screenshot
 
@@ -45,7 +45,7 @@ Claude was used to clarify unknown code and instructions. No direct code or writ
 
 ### After Screenshot
 
-[Issue 91 After](screenshots/trystan_mccutcheon_issue102_before.png)
+[Issue 91 After](screenshots/trystan_mccutcheon_issue102_after.png)
 
 ### Classification
 
