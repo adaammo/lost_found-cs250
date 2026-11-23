@@ -168,7 +168,7 @@ export default function CampusMap({
                 <input
                   type="text"
                   id="item-name"
-                  maxLength={50}
+                  maxLength={20}
                   value={itemFormData.item_name}
                   onChange={(e) => setItemFormData({ ...itemFormData, item_name: e.target.value })}
                   className="bg-white text-black border border--(border) rounded-md p-2"
