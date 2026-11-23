@@ -1,6 +1,4 @@
-<<<<<<< Updated upstream
 Group 4 report md
-=======
 # Team 04
 
 ## Team Members
@@ -115,6 +113,4 @@ Removal is denied. (Also, there will be no button present, so the attempt can on
 
 # 6. Sprint Summary
 
-This sprint we focused on bug identification, triage, bug fixes, and regression testing following canvas instructions. The Issues that we discovered during verification and validation (PR3) were categorized and tracked through GitHub Issues, and the project board. Several bugs were fixed and tested to confirm that existing functionality continued to operate correctly after merging the fix. 
-The selected feature for the next sprint is to allow users who made reports to have the ability remove their own map pins. Our team should prioritize implementing that feature while continuing to test & monitor for any newly discovered defects as we progress.
->>>>>>> Stashed changes
+This sprint we focused on bug identification, triage, bug fixes, and regression testing following canvas instructions. The Issues that we discovered during verification and validation (PR3) were categorized and tracked through GitHub Issues, and the project board. Several bugs were fixed and tested to confirm that existing functionality continued to operate correctly after merging the fix. The selected feature for the next sprint is to allow users who made reports to have the ability remove their own map pins. Our team should prioritize implementing that feature while continuing to test & monitor for any newly discovered defects as we progress.
