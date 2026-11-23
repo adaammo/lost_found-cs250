@@ -42,6 +42,14 @@ export async function insertItemReport(item: ItemCreate): Promise<{ ok: false; e
   } catch (error) {
     if (isAxiosError(error)) {
       const data = error.response?.data as FastAPIErrorResponse | undefined;
+      
+      if(!error.response) {
+        return{
+          ok: false,
+          error: "Server failed to connect, report was not saved please try again later"
+        }
+      }
+
       const msg =
         data?.detail ??
         error.message ??
