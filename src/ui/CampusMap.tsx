@@ -216,13 +216,23 @@ export default function CampusMap({
                 <button
                   onClick={() => {
                     startTransition(async () => {
+                      // error else
+                      // GitHub Issue: No error message displayed when submitting a lost-item report with an empty item name #83
+                      // I think the errors should be checked first before trying to submit The report form
+                      // Checking if the item name is blank, and this is also including if it's just spaces too
+                      if (!itemFormData.item_name.trim()) {
+                        // Throwing a pop up for the user, to notify them of the invalidation regarding the item name
+                        alert("Please enter an item name.");
+                        return;
+                      }
+
+                      // Data submission area
                       const data = await insertItemReport(itemFormData)
                       if (data.ok) {
                         setIsItemModalOpen(false);
                         window.location.reload();
                         return router.refresh()
                       }
-                      // error else
                     })
                   }}
                   type="submit"
