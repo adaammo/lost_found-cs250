@@ -1,7 +1,7 @@
-# Test Cases: [Trystan M]
+# Test Cases: trystan-m
 
-**Team number:** [04]
-**My area:** [Back End / User Experience]
+**Team number:** [4]
+**My area:** [from REQUIREMENTS.md]
 
 <!--
 HOW TO USE THIS FILE
@@ -19,71 +19,71 @@ HOW TO USE THIS FILE
 ---
 
 **Test ID: TM-01**
-**From Part 6:** (old test number, or New)
+**From Part 6:** (old test number)
 **Written by:** Trystan McCutcheon
-**Title:** Pins Clutter
-**Traces to:** REQ-TM-01
-**Test type:** System (Unit / Integration / System / Acceptance / Boundary Value / Negative / Security)
-**Preconditions:** Pin exists on map already
-**Test data:** Item Name: Wallet, Item Description: Lots of cash, Longitude: 37, Latitude: -118
+**Title:** Tracing ItemReport
+**Traces to:** src/lib/type.ts
+**Test type:** (System)
+**Preconditions:** User is Logged in, User has info for lost item
+**Test data:** Item name: Wallet, Item description: lots of cash, Latitude: 32.7, Longitude: -117
 
 **Steps:**
-1. Mark pin on existing pin
-2. Fill in test data
-3. Submit pin
+1. Sign in using OAuth
+2. Click at Latitude and Longitude from data
+3. Type name and description from data and submit
 
-**Expected result:** Grouped pins, layered pins
-**Actual result:** Pins clip over each other
-**Status:** (Fail)
-**Severity:** (Major)
-**V or V:** (Validation)
-**GitHub Issue:** #78
+**Expected result:** Pin Created
+**Actual result:** Pin Created
+**Status:** (Pass)
+**Severity:** (Minor)
+**V or V:** (Verification)
+**GitHub Issue:** N/A Pass Only
 
 ---
 
 **Test ID: TM-02**
-**From Part 6:** (old test number, or New)
+**From Part 6:** (old test number)
 **Written by:** Trystan McCutcheon
-**Title:** No character limits on Item Report
-**Traces to:** REQ-TM-02
-**Test type:** Unit
-**Preconditions:** Pin name is longer than frame width
-**Test data:** Item Name: SuperLongNameOfASuperLongNamedItem, Item Description: Lots of cash, Longitude: 37, Latitude: -118
+**Title:** Pins clutter
+**Traces to:** CampusMap.tsx
+**Test type:**  Unit
+**Preconditions:** Pin is already created, new pin is same coordinates
+**Test data:** Item name: Wallet, Item description: lots of cash, Latitude: 32.7, Longitude: -117; Item2 name: Bag, Item description: blue, Latitude: 32.7, Longitude: -117
 
 **Steps:**
-1. Place item pin
-2. Fill in test data
+1. Have a pin already placed
+2. Place a new pin on top of the pin
 3. Submit the pin
 
-**Expected result:** Character limit exceeded
-**Actual result:** Pin created
+**Expected result:** Layered pins so you can click to see which are grouped in the same area
+**Actual result:** Pins clip over each other
 **Status:** Fail
-**Severity:** Minor
-**V or V:** Validation
-**GitHub Issue:** #90
+**Severity:** Major
+**V or V:** Validation 
+**GitHub Issue:** #78
 
 ---
 
 **Test ID: TM-03**
-**From Part 6:** (old test number, or New)
+**From Part 6:** (New)
 **Written by:** Trystan McCutcheon
-**Title:** Contact Information
-**Traces to:** REQ-TM-03
-**Test type:** Acceptance
-**Preconditions:** User is signed in
-**Test data:** Item Name: Wallet, Item Description: Lots of cash, Longitude: 37, Latitude: -118
+**Title:** No characters limits on Item report
+**Traces to:** insertItemReport()
+**Test type:** Unit
+**Preconditions:** Have an item report
+**Test data:** Item name: SuperLongNameNoEndToThisName, Item description: lots of cash and words and word and words, Latitude: 32.7, Longitude: -117
 
 **Steps:**
-1. Sign in using OAuth
-2. Place a pin using Test data
-3. Have information show in pin
+1. Click to place a pin
+2. Insert the Item name and description test data
+3. Submit
 
-**Expected result:** Email is shown in pin of owner
-**Actual result:** Email is shown
-**Status:** Pass
+**Expected result:** No typing past character limits
+**Actual result:** Submitted
+**Status:** Fail
 **Severity:** Minor
 **V or V:** Verification
-**GitHub Issue:** Pass Only
+**GitHub Issue:** #90
 
 ---
 
@@ -91,17 +91,17 @@ HOW TO USE THIS FILE
 **From Part 6:** (New)
 **Written by:** Trystan McCutcheon
 **Title:** Completed Pins Stay
-**Traces to:** REQ-TM-04
-**Test type:** Unit
-**Preconditions:** Pin owner marks the pin as found
-**Test data:** Item Name: Wallet, Item Description: Lots of cash, Longitude: 37, Latitude: -118
+**Traces to:** CampusMap.tsx
+**Test type:** System
+**Preconditions:** The pin's creator marks it found
+**Test data:** Item name: Wallet, Item description: lots of cash, Latitude: 32.7, Longitude: -117
 
 **Steps:**
-1. Create a pin
-2. Input test data
-3. Resolve the pin
+1. Create a pin using the test data
+2. Submit the data
+3. Mark the pin as completed
 
-**Expected result:** Pin is resolved and disapears
+**Expected result:** Pin disapears or filters out after a day
 **Actual result:** Pin stays indefinetly
 **Status:** Fail
 **Severity:** Major
