@@ -1,8 +1,9 @@
+Group 4 report md
 # Team 04
 
 ## Team Members
 - Javier Rivera
-- [Team Member 2]
+- Trystan McCutcheon
 - [Team Member 3]
 - [Team Member 4]
 
@@ -14,7 +15,7 @@
 |------------|------------|------------|------------|------------|------------|------------|
 | TC-JR-02 | Code Bug | #87 | Major | Medium | Javier Rivera | Fixed |
 | Empty Item Name Validation | Code Bug | #83 | Minor | Medium | Javier Rivera | Fixed |
-| [Test] | [Code Bug / Test Bug / Missing Feature] | [Issue] | [Severity] | [Priority] | [Owner] | [Status] |
+| TC-TM-01 | Code Bug | #90 | Minor | Low | Trystan McCutcheon | Fixed |
 | [Test] | [Code Bug / Test Bug / Missing Feature] | [Issue] | [Severity] | [Priority] | [Owner] | [Status] |
 
 ---
@@ -80,7 +81,7 @@ Our team selected this feature because users currently have the ability to creat
 | Team Member | Responsibility |
 |------------|------------|
 | Javier Rivera | Front-End Button Implementation |
-| Team Member 2 | [Task] |
+| Trystan McCutcheon | Error message, Character Limit |
 | Team Member 3 | [Task] |
 | Team Member 4 | [Task] |
 
@@ -112,5 +113,4 @@ Removal is denied. (Also, there will be no button present, so the attempt can on
 
 # 6. Sprint Summary
 
-This sprint we focused on bug identification, triage, bug fixes, and regression testing following canvas instructions. The Issues that we discovered during verification and validation (PR3) were categorized and tracked through GitHub Issues, and the project board. Several bugs were fixed and tested to confirm that existing functionality continued to operate correctly after merging the fix. 
-The selected feature for the next sprint is to allow users who made reports to have the ability remove their own map pins. Our team should prioritize implementing that feature while continuing to test & monitor for any newly discovered defects as we progress.
+This sprint we focused on bug identification, triage, bug fixes, and regression testing following canvas instructions. The Issues that we discovered during verification and validation (PR3) were categorized and tracked through GitHub Issues, and the project board. Several bugs were fixed and tested to confirm that existing functionality continued to operate correctly after merging the fix. The selected feature for the next sprint is to allow users who made reports to have the ability remove their own map pins. Our team should prioritize implementing that feature while continuing to test & monitor for any newly discovered defects as we progress.
