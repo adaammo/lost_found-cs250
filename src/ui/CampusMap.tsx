@@ -70,6 +70,16 @@ export default function CampusMap({
 
     return item.item_type === filter;
   });
+  // <Group 4 Edit: Javier Rivera> (Github issue #87 solution)
+  // Setting a variable that will lay the area limits of the longitude and latitude parameters for map pin selection
+  // Latitude & Longitude Values were given by Ai, after i uploading a screenshot cutting out SDSU area on Google Maps; that I preferred for the selection range of the SDSU area 
+  const SDSUArea = 
+    itemFormData.latitude >= 32.765 &&
+    itemFormData.latitude <= 32.785 &&
+    itemFormData.longitude >= -117.085 &&
+    itemFormData.longitude <= -117.055;
+  //</Edit>
+
   // Open selected item inside the SAME right-side panel
   const openItemDetails = (item: Item) => {
     setSelectedItem(item);
@@ -217,6 +227,7 @@ export default function CampusMap({
                   onClick={() => {
                     startTransition(async () => {
                       // error else
+                      // <Group 4 Edit: Javier Rivera> (Github issue #83 solution)
                       // GitHub Issue: No error message displayed when submitting a lost-item report with an empty item name #83
                       // I think the errors should be checked first before trying to submit The report form
                       // Checking if the item name is blank, and this is also including if it's just spaces too
@@ -225,6 +236,15 @@ export default function CampusMap({
                         alert("Please enter an item name.");
                         return;
                       }
+                      // </Edit>
+
+                      // <Group 4 Edit: Javier Rivera> (Github issue #87 solution)
+                      // This should catch inappropriate inputs that are selected on the map from the user, such as if a user were to select a location in Africa or somewhere else in the world, when this apps purpose is for lost property reports only in the SDSU area
+                      if (!SDSUArea) {
+                        alert("Please select a location within the SDSU area only!");
+                        return;
+                      }
+                      // </Edit>
 
                       // Data submission area
                       const data = await insertItemReport(itemFormData)
